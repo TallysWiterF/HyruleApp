@@ -1,4 +1,4 @@
-# Hyrule Monsters App
+# Hyrule App
 
 Este projeto foi criado com o objetivo de aprofundar os estudos sobre a arquitetura Clean Dart, aplicando seus conceitos no desenvolvimento de um aplicativo Flutter.
 
