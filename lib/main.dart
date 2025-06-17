@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hyrule/screens/categories.dart';
 
 void main() {
   runApp(const Hyrule());
@@ -12,22 +13,11 @@ class Hyrule extends StatelessWidget {
     return MaterialApp(
       title: 'Hyrule',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorSchemeSeed: Colors.blue,
+        brightness: Brightness.dark,
         useMaterial3: true,
       ),
-      home: Container(
-        color: Colors.blueGrey[900],
-        child: const Center(
-          child: Text(
-            'Welcome to Hyrule',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ),
+      home: Categories(),
     );
   }
 }

@@ -1,6 +1,13 @@
 import 'dart:convert';
 import 'package:floor/floor.dart';
 
+/// Representa uma entidade do sistema que armazena informações sobre um item,
+/// criatura ou local do universo de Hyrule.
+///
+/// A classe `Entry` é utilizada para modelar e persistir dados relevantes, como
+/// nome, imagem, descrição, localizações comuns e categoria. Ela serve como base
+/// para operações de armazenamento, recuperação e manipulação de dados no sistema,
+/// facilitando a integração entre a camada de dados e a lógica de negócio.
 @entity
 class Entry {
   @primaryKey
