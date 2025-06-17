@@ -10,8 +10,8 @@ abstract class EntryDao {
   Future<Entry?> getEntryById(int id);
 
   @Insert(onConflict: OnConflictStrategy.replace)
-  Future<void> addEntry(Entry entry);
+  Future<void> saveEntry(Entry entry);
 
   @delete
-  Future<void> removeEntry(Entry entry);
+  Future<void> deleteEntry(Entry entry);
 }
