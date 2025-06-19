@@ -61,6 +61,8 @@ class _$AppDatabase extends AppDatabase {
     changeListener = listener ?? StreamController<String>.broadcast();
   }
 
+  EntryDao? _entryDaoInstance;
+
   Future<sqflite.Database> open(
     String path,
     List<Migration> migrations, [
@@ -92,6 +94,69 @@ class _$AppDatabase extends AppDatabase {
   }
 
   @override
-  // TODO: implement entryDao
-  EntryDao get entryDao => throw UnimplementedError();
+  EntryDao get entryDao {
+    return _entryDaoInstance ??= _$EntryDao(database, changeListener);
+  }
+}
+
+class _$EntryDao extends EntryDao {
+  _$EntryDao(
+    this.database,
+    this.changeListener,
+  )   : _queryAdapter = QueryAdapter(database),
+        _entryInsertionAdapter = InsertionAdapter(
+            database,
+            'Entry',
+            (Entry item) => <String, Object?>{
+                  'id': item.id,
+                  'name': item.name,
+                  'image': item.image,
+                  'description': item.description,
+                  'commonLocations': item.commonLocations,
+                  'category': item.category
+                }),
+        _entryDeletionAdapter = DeletionAdapter(
+            database,
+            'Entry',
+            ['id'],
+            (Entry item) => <String, Object?>{
+                  'id': item.id,
+                  'name': item.name,
+                  'image': item.image,
+                  'description': item.description,
+                  'commonLocations': item.commonLocations,
+                  'category': item.category
+                });
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<Entry> _entryInsertionAdapter;
+
+  final DeletionAdapter<Entry> _entryDeletionAdapter;
+
+  @override
+  Future<List<Entry>> getAllEntries() async {
+    return _queryAdapter.queryList('SELECT * FROM ENTRY',
+        mapper: (Map<String, Object?> row) => Entry(
+            id: row['id'] as int,
+            name: row['name'] as String,
+            image: row['image'] as String,
+            description: row['description'] as String,
+            commonLocations: row['commonLocations'] as String,
+            category: row['category'] as String));
+  }
+
+  @override
+  Future<void> addEntry(Entry entry) async {
+    await _entryInsertionAdapter.insert(entry, OnConflictStrategy.replace);
+  }
+
+  @override
+  Future<void> removeEntry(Entry entry) async {
+    await _entryDeletionAdapter.delete(entry);
+  }
 }

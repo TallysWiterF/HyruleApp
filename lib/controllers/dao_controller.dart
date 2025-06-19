@@ -23,9 +23,9 @@ class DaoController implements DaoWorkflow {
 
   @override
   Future<void> saveEntry({required Entry entry}) async =>
-      createDatabase().then((entryDao) => entryDao.saveEntry(entry));
+      createDatabase().then((entryDao) => entryDao.addEntry(entry));
 
   @override
   Future<void> deleteEntry({required Entry entry}) async =>
-      createDatabase().then((entryDao) => entryDao.deleteEntry(entry));
+      createDatabase().then((entryDao) => entryDao.removeEntry(entry));
 }

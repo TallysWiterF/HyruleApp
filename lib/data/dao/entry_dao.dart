@@ -12,12 +12,9 @@ abstract class EntryDao {
   @Query('SELECT * FROM ENTRY')
   Future<List<Entry>> getAllEntries();
 
-  @Query('SELECT * FROM ENTRY WHERE id = :id')
-  Future<Entry?> getEntryById(int id);
-
   @Insert(onConflict: OnConflictStrategy.replace)
-  Future<void> saveEntry(Entry entry);
+  Future<void> addEntry(Entry entry);
 
   @delete
-  Future<void> deleteEntry(Entry entry);
+  Future<void> removeEntry(Entry entry);
 }
